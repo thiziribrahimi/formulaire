@@ -1,0 +1,462 @@
+/* ===== CSS COMPLET AVEC NOUVELLES COULEURS PIQUANTES ===== */
+
+.service-choice-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: 40px;
+}
+
+.eddmon-logo {
+  height: 60px;
+  display: block;
+  margin: 0 auto;
+}
+
+.step-title {
+  font-weight: bold;
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+/* WRAPPER */
+.service-cards-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  justify-content: space-between;
+}
+
+/* ✅ SERVICE BOX AMÉLIORÉ */
+.service-box {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  width: 100%;
+  max-width: 700px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.service-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, 
+    rgba(255,255,255,0.1) 0%, 
+    rgba(255,255,255,0.05) 50%, 
+    rgba(255,255,255,0.1) 100%);
+  pointer-events: none;
+}
+
+.service-box:hover {
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+}
+
+.service-box.selected {
+  border: 2px solid #a259ff;
+}
+
+/* ✅ HEADER AMÉLIORÉ */
+.service-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+/* ✅ MISE À JOUR DU TITRE ET PRIX POUR LES COULEURS PIQUANTES */
+.bg-blue .service-title,
+.bg-orange .service-title,
+.bg-pink .service-title,
+.bg-electric-blue .service-title,
+.bg-vibrant-orange .service-title,
+.bg-hot-pink .service-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  color: white;
+}
+
+.bg-blue .service-price,
+.bg-orange .service-price,
+.bg-pink .service-price,
+.bg-electric-blue .service-price,
+.bg-vibrant-orange .service-price,
+.bg-hot-pink .service-price {
+  font-size: 1.1rem;
+  font-weight: 600;
+  background: rgba(255,255,255,0.2);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.bg-blue .service-subtitle,
+.bg-orange .service-subtitle,
+.bg-pink .service-subtitle,
+.bg-electric-blue .service-subtitle,
+.bg-vibrant-orange .service-subtitle,
+.bg-hot-pink .service-subtitle {
+  color: rgba(255,255,255,0.95);
+  font-weight: 500;
+}
+
+/* SUBTITLE */
+.service-subtitle {
+  margin-top: 8px;
+  font-size: 1rem;
+  line-height: 1.4;
+  opacity: 0.95;
+}
+
+.arrow {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 20px;
+  color: #bbb;
+}
+
+/* DÉTAILS EXTENSIBLES */
+.details {
+  margin-top: 16px;
+  font-size: 14px;
+  animation: fadeIn 0.3s ease;
+}
+
+/* TARIF */
+.tarif-list div {
+  margin: 4px 0;
+}
+
+/* ✅ BOUTONS ASSORTIS AUX COULEURS DES CARTES */
+.select-service-btn, .btn.btn-primary {
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  width: 100%;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Bouton par défaut */
+.select-service-btn, .btn.btn-primary {
+  background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+
+.select-service-btn:hover, .btn.btn-primary:hover {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(79, 70, 229, 0.4);
+}
+
+.select-service-btn:active, .btn.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.3);
+}
+
+/* ✅ BOUTONS SPÉCIFIQUES SELON LA COULEUR DE LA CARTE */
+
+/* Bouton pour carte bleue électrique */
+.bg-electric-blue .select-service-btn,
+.bg-electric-blue .btn.btn-primary,
+.bg-blue .select-service-btn,
+.bg-blue .btn.btn-primary {
+  background: linear-gradient(135deg, #1e40af 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 12px rgba(30, 64, 175, 0.4);
+}
+
+.bg-electric-blue .select-service-btn:hover,
+.bg-electric-blue .btn.btn-primary:hover,
+.bg-blue .select-service-btn:hover,
+.bg-blue .btn.btn-primary:hover {
+  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
+  box-shadow: 0 6px 16px rgba(30, 64, 175, 0.5);
+  transform: translateY(-1px);
+}
+
+/* Bouton pour carte orange vibrante */
+.bg-vibrant-orange .select-service-btn,
+.bg-vibrant-orange .btn.btn-primary,
+.bg-orange .select-service-btn,
+.bg-orange .btn.btn-primary {
+  background: linear-gradient(135deg, #c2410c 0%, #ea580c 100%);
+  box-shadow: 0 4px 12px rgba(194, 65, 12, 0.4);
+}
+
+.bg-vibrant-orange .select-service-btn:hover,
+.bg-vibrant-orange .btn.btn-primary:hover,
+.bg-orange .select-service-btn:hover,
+.bg-orange .btn.btn-primary:hover {
+  background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
+  box-shadow: 0 6px 16px rgba(194, 65, 12, 0.5);
+  transform: translateY(-1px);
+}
+
+/* Bouton pour carte rose fuschia */
+.bg-hot-pink .select-service-btn,
+.bg-hot-pink .btn.btn-primary,
+.bg-pink .select-service-btn,
+.bg-pink .btn.btn-primary {
+  background: linear-gradient(135deg, #be185d 0%, #db2777 100%);
+  box-shadow: 0 4px 12px rgba(190, 24, 93, 0.4);
+}
+
+.bg-hot-pink .select-service-btn:hover,
+.bg-hot-pink .btn.btn-primary:hover,
+.bg-pink .select-service-btn:hover,
+.bg-pink .btn.btn-primary:hover {
+  background: linear-gradient(135deg, #db2777 0%, #e11d48 100%);
+  box-shadow: 0 6px 16px rgba(190, 24, 93, 0.5);
+  transform: translateY(-1px);
+}
+
+/* ✅ NOUVELLES COULEURS PIQUANTES */
+
+/* Bleu électrique pour Soutien Scolaire */
+.bg-electric-blue {
+  background: linear-gradient(135deg, #0066ff 0%, #0052e6 50%, #003cb3 100%);
+  color: white;
+  box-shadow: 0 8px 32px rgba(0, 102, 255, 0.3);
+  border: 2px solid rgba(0, 102, 255, 0.2);
+}
+
+.bg-electric-blue:hover {
+  background: linear-gradient(135deg, #0052e6 0%, #003cb3 50%, #002980 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 102, 255, 0.4);
+}
+
+.bg-electric-blue.selected {
+  background: linear-gradient(135deg, #003cb3 0%, #002980 50%, #001f66 100%);
+  border: 2px solid #00ffff;
+  box-shadow: 0 15px 50px rgba(0, 102, 255, 0.5);
+}
+
+/* Orange vibrant pour Babysitting */
+.bg-vibrant-orange {
+  background: linear-gradient(135deg, #ff6600 0%, #e55a00 50%, #cc4400 100%);
+  color: white;
+  box-shadow: 0 8px 32px rgba(255, 102, 0, 0.3);
+  border: 2px solid rgba(255, 102, 0, 0.2);
+}
+
+.bg-vibrant-orange:hover {
+  background: linear-gradient(135deg, #e55a00 0%, #cc4400 50%, #b33300 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(255, 102, 0, 0.4);
+}
+
+.bg-vibrant-orange.selected {
+  background: linear-gradient(135deg, #cc4400 0%, #b33300 50%, #990000 100%);
+  border: 2px solid #ffaa00;
+  box-shadow: 0 15px 50px rgba(255, 102, 0, 0.5);
+}
+
+/* Rose fuschia pour Cours de musique */
+.bg-hot-pink {
+  background: linear-gradient(135deg, #ff1493 0%, #e6007a 50%, #cc0066 100%);
+  color: white;
+  box-shadow: 0 8px 32px rgba(255, 20, 147, 0.3);
+  border: 2px solid rgba(255, 20, 147, 0.2);
+}
+
+.bg-hot-pink:hover {
+  background: linear-gradient(135deg, #e6007a 0%, #cc0066 50%, #b30052 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(255, 20, 147, 0.4);
+}
+
+.bg-hot-pink.selected {
+  background: linear-gradient(135deg, #cc0066 0%, #b30052 50%, #99003d 100%);
+  border: 2px solid #ff66cc;
+  box-shadow: 0 15px 50px rgba(255, 20, 147, 0.5);
+}
+
+/* 🎯 COULEURS UNIES ET PIQUANTES SANS DÉGRADÉ */
+.bg-blue {
+  background: #1e40af;
+  color: white;
+  box-shadow: 0 8px 32px rgba(30, 64, 175, 0.3);
+  border: 2px solid rgba(30, 64, 175, 0.2);
+}
+
+.bg-blue:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(30, 64, 175, 0.4);
+}
+
+.bg-blue.selected {
+  background: #2563eb;
+  border: 2px solid #60a5fa;
+  box-shadow: 0 15px 50px rgba(30, 64, 175, 0.5);
+  animation: pulse-blue-solid 2s infinite;
+}
+
+.bg-orange {
+  background: #ea580c;
+  color: white;
+  box-shadow: 0 8px 32px rgba(234, 88, 12, 0.3);
+  border: 2px solid rgba(234, 88, 12, 0.2);
+}
+
+.bg-orange:hover {
+  background: #f97316;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(234, 88, 12, 0.4);
+}
+
+.bg-orange.selected {
+  background: #fb923c;
+  border: 2px solid #fed7aa;
+  box-shadow: 0 15px 50px rgba(234, 88, 12, 0.5);
+  animation: pulse-orange-solid 2s infinite;
+}
+
+.bg-pink {
+  background: #db2777;
+  color: white;
+  box-shadow: 0 8px 32px rgba(219, 39, 119, 0.3);
+  border: 2px solid rgba(219, 39, 119, 0.2);
+}
+
+.bg-pink:hover {
+  background: #e11d48;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(219, 39, 119, 0.4);
+}
+
+.bg-pink.selected {
+  background: #f43f5e;
+  border: 2px solid #fda4af;
+  box-shadow: 0 15px 50px rgba(219, 39, 119, 0.5);
+  animation: pulse-pink-solid 2s infinite;
+}
+
+/* PANIER */
+.cart-summary-box {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.07);
+  padding: 32px 24px;
+  width: 100%;
+  min-width: 360px;
+  height: 100%;
+  min-height: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-summary-title {
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+
+.cart-summary-img {
+  max-width: 140px;
+  height: auto;
+}
+
+.cart-summary-placeholder {
+  font-size: 14px;
+  color: #8a5cf6;
+  margin-top: 16px;
+  text-align: center;
+}
+
+/* 🎯 ANIMATIONS SIMPLES SANS DÉGRADÉ */
+@keyframes pulse-blue-solid {
+  0%, 100% { 
+    box-shadow: 0 15px 50px rgba(30, 64, 175, 0.5); 
+  }
+  50% { 
+    box-shadow: 0 20px 60px rgba(30, 64, 175, 0.7); 
+  }
+}
+
+@keyframes pulse-orange-solid {
+  0%, 100% { 
+    box-shadow: 0 15px 50px rgba(234, 88, 12, 0.5); 
+  }
+  50% { 
+    box-shadow: 0 20px 60px rgba(234, 88, 12, 0.7); 
+  }
+}
+
+@keyframes pulse-pink-solid {
+  0%, 100% { 
+    box-shadow: 0 15px 50px rgba(219, 39, 119, 0.5); 
+  }
+  50% { 
+    box-shadow: 0 20px 60px rgba(219, 39, 119, 0.7); 
+  }
+}
+
+.bg-electric-blue.selected {
+  animation: pulse-blue-solid 2s infinite;
+}
+
+.bg-vibrant-orange.selected {
+  animation: pulse-orange-solid 2s infinite;
+}
+
+.bg-hot-pink.selected {
+  animation: pulse-pink-solid 2s infinite;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ✅ RESPONSIVE */
+@media (max-width: 768px) {
+  .service-cards-wrapper {
+    flex-direction: column;
+  }
+
+  .service-box {
+    width: 100%;
+    max-width: 100%;
+    padding: 20px;
+    margin-bottom: 12px;
+  }
+
+  .service-title {
+    font-size: 1.2rem;
+  }
+
+  .service-price {
+    font-size: 1rem;
+    padding: 4px 8px;
+  }
+
+  .cart-summary-box {
+    max-width: 100%;
+    margin-top: 24px;
+  }
+}
