@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/formulaire/static/css/main.b9c692c7.css",
+    "main.js": "/formulaire/static/js/main.497ddbb8.js",
+    "index.html": "/formulaire/index.html",
+    "main.b9c692c7.css.map": "/formulaire/static/css/main.b9c692c7.css.map",
+    "main.497ddbb8.js.map": "/formulaire/static/js/main.497ddbb8.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b9c692c7.css",
+    "static/js/main.497ddbb8.js"
+  ]
+}
