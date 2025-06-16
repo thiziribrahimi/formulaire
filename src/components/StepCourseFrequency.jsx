@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./StepCourseFrequency.css";
 
+const PUBLIC_URL = process.env.PUBLIC_URL;
+
 const StepCourseFrequency = ({
   selectedService,
   courseFrequency = {},
@@ -39,7 +41,7 @@ const StepCourseFrequency = ({
     <>
       {/* 🔙 Bouton retour externe */}
       <button className="btn-icon-outside" onClick={onBack}>
-        <img src="/left-return-arrow.svg" alt="Retour" className="icon-left" />
+        <img src={`${PUBLIC_URL}/left-return-arrow.svg`} alt="Retour" className="icon-left" />
       </button>
 
       <div className="container py-5">
@@ -76,7 +78,7 @@ const StepCourseFrequency = ({
                 {time}
                 {time === recommendedDuration && (
                   <img
-                    src="/star.svg"
+                    src={`${PUBLIC_URL}/star.svg`}
                     alt="recommandé"
                     className="ms-2 star-icon"
                   />
@@ -88,7 +90,7 @@ const StepCourseFrequency = ({
 
         {/* Info recommandation */}
         <div className="text-muted mt-2 mb-3 d-flex align-items-center">
-          <img src="/star.svg" alt="star" width="16" className="me-2" />
+          <img src={`${PUBLIC_URL}/star.svg`} alt="star" width="16" className="me-2" />
           Durée recommandée par nos clients
         </div>
 

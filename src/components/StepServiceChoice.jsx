@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./StepServiceChoice.css";
 
+const PUBLIC_URL = process.env.PUBLIC_URL;
+
 const StepServiceChoice = ({ selectedService, setSelectedService, onNext }) => {
   const [openedCard, setOpenedCard] = useState(null);
 
@@ -24,7 +26,7 @@ const StepServiceChoice = ({ selectedService, setSelectedService, onNext }) => {
     {
       id: "music",
       title: "Cours de musique",
-      subtitleBold: "Apprendre la musique en s’amusant.",
+      subtitleBold: "Apprendre la musique en s'amusant.",
       subtitle: "",
       price: "25€/h",
       bgClass: "bg-pink",

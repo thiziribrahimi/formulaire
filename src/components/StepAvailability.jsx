@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./StepAvailability.css";
 import AvailabilityModal from "./AvailabilityModal";
 
+const PUBLIC_URL = process.env.PUBLIC_URL;
+
 const DAYS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
 const TIMES = ["Matin", "Après-midi", "Soir"];
 
@@ -46,7 +48,7 @@ function StepAvailability({ availability, setAvailability, onNext, onBack }) {
   return (
     <>
       <button className="btn-icon-outside" onClick={onBack}>
-        <img src="/left-return-arrow.svg" alt="Retour" className="icon-left" />
+        <img src={`${PUBLIC_URL}/left-return-arrow.svg`} alt="Retour" className="icon-left" />
       </button>
 
       <div className="availability-wrapper">
@@ -54,7 +56,7 @@ function StepAvailability({ availability, setAvailability, onNext, onBack }) {
         <div className="header-top">
           <div>
             <h3 className="title d-flex align-items-center">
-              <img src="/calender-icon.svg" alt="Calendrier" className="calendar-icon me-2" />
+              <img src={`${PUBLIC_URL}/calender-icon.svg`} alt="Calendrier" className="calendar-icon me-2" />
               Vos disponibilités préférées
             </h3>
             <p className="subtext">

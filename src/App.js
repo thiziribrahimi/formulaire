@@ -12,6 +12,8 @@ import ProgressBar from "./components/ProgressBar";
 
 import "./App.css";
 
+const PUBLIC_URL = process.env.PUBLIC_URL;
+
 function App() {
   const [step, setStep] = useState(0);
   const [showCartMobile, setShowCartMobile] = useState(false);
@@ -44,7 +46,41 @@ function App() {
   });
 
   const next = () => setStep((prev) => prev + 1);
-  const back = () => setStep((prev) => Math.max(prev - 1, 0));
+  
+  // ✅ SOLUTION 1 : Fonction back() améliorée avec réinitialisation
+  const back = () => {
+    const newStep = Math.max(step - 1, 0);
+    setStep(newStep);
+    
+    // ✅ Réinitialiser tous les états si on revient à l'étape 0
+    if (newStep === 0) {
+      console.log("🔄 Retour à l'étape 0 - Réinitialisation de tous les états");
+      setSelectedService("");
+      setStudentInfo({
+        firstName: "",
+        level: "",
+        needs: [],
+        specifics: [],
+      });
+      setGoalsSubjects({
+        goal: "",
+        subjects: [],
+      });
+      setCourseFrequency({
+        timesPerWeek: null,
+        duration: null,
+      });
+      setAvailability([]);
+      setContactInfo({
+        gender: "",
+        parentName: "",
+        email: "",
+        phone: "",
+      });
+      // ✅ Masquer le panier mobile si ouvert
+      setShowCartMobile(false);
+    }
+  };
 
   // ✅ Webhook 1 – Étape 6 : Envoi du dossier principal - LOGIQUE FINALE
   const handleSendMainData = async (contactData) => {

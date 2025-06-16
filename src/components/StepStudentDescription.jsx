@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import './StepStudentDescription.css';
 
+const PUBLIC_URL = process.env.PUBLIC_URL;
+
 function StepStudentDescription({ onNext, onBack, studentInfo, setStudentInfo }) {
   const [hasSpecialNeeds, setHasSpecialNeeds] = useState(
     studentInfo.specifics && studentInfo.specifics.length > 0
   );
+
+  // ✅ Débogage pour vérifier les chemins d'images
+  console.log("🔍 PUBLIC_URL:", PUBLIC_URL);
+  console.log("🔍 Image path:", `${PUBLIC_URL}/multi-stars.svg`);
 
   const handleContinue = () => {
     const { firstName, level, needs } = studentInfo;
@@ -39,7 +45,7 @@ function StepStudentDescription({ onNext, onBack, studentInfo, setStudentInfo })
   return (
     <>
       <button className="btn-icon-outside" onClick={onBack}>
-        <img src="/left-return-arrow.svg" alt="Retour" className="icon-left" />
+        <img src={`${PUBLIC_URL}/left-return-arrow.svg`} alt="Retour" className="icon-left" />
       </button>
 
       <div className="step-student-wrapper">
@@ -48,7 +54,23 @@ function StepStudentDescription({ onNext, onBack, studentInfo, setStudentInfo })
         <div className="step-student-description container">
           <h2 className="step-title">
             <em>Décrivez-nous l'élève :</em>{' '}
-            <img src="/multi-star.svg" alt="✨" className="emoji-icon" />
+            {/* ✅ SOLUTION 1 : Utiliser un emoji direct (plus fiable) */}
+            <span className="emoji-icon">✨</span>
+            
+            {/* ✅ SOLUTION 2 : Image avec gestion d'erreur */}
+            {/* <img 
+              src={`${PUBLIC_URL}/multi-stars.svg`} 
+              alt="✨" 
+              className="emoji-icon"
+              onError={(e) => {
+                console.warn("❌ Image failed to load:", e.target.src);
+                e.target.style.display = 'none';
+              }}
+              onLoad={() => console.log("✅ Image loaded successfully")}
+            /> */}
+            
+            {/* ✅ SOLUTION 3 : Utiliser une image qui existe */}
+            {/* <img src={`${PUBLIC_URL}/up-direction-img.svg`} alt="✨" className="emoji-icon" /> */}
           </h2>
 
           <div className="mb-4">

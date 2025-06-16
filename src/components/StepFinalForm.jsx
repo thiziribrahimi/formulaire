@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./StepFinalForm.css";
 
+const PUBLIC_URL = process.env.PUBLIC_URL;
+
 const tutorProfiles = [
   "Pédagogue",
   "Empathique",

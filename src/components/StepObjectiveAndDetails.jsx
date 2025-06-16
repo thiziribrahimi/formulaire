@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./StepGoalsSubjects.css";
 
+const PUBLIC_URL = process.env.PUBLIC_URL;
+
 const musicGoalsWithIcons = [
   { id: "Solfège", icon: "solfege_icon_og.svg" },
   { id: "Découverte - éveil", icon: "decouverte_icon_og.svg" },
@@ -88,7 +90,7 @@ const StepObjectiveAndDetails = ({
           className={`goal-button ${goal === g.id ? "active" : ""}`}
           onClick={() => selectGoal(g.id)}
         >
-          <img src={`/${g.icon}`} alt={g.id} className="goal-icon" />
+          <img src={`${PUBLIC_URL}/${g.icon}`} alt={g.id} className="goal-icon" />
           {g.id}
         </button>
       ))}
@@ -134,7 +136,7 @@ const StepObjectiveAndDetails = ({
   return (
     <>
       <button className="btn-icon-outside" onClick={onBack}>
-        <img src="/left-return-arrow.svg" alt="Retour" className="icon-left" />
+        <img src={`${PUBLIC_URL}/left-return-arrow.svg`} alt="Retour" className="icon-left" />
       </button>
 
       <div className="step-goals-subjects container py-5">

@@ -1,6 +1,8 @@
 import React from "react";
 import "./AvailabilityModal.css"; // fichier CSS à créer ou compléter
 
+const PUBLIC_URL = process.env.PUBLIC_URL;
+
 function AvailabilityModal({ day, time, onSelect, onClose }) {
   return (
     <div className="popup-container">

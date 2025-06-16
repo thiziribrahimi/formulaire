@@ -9,19 +9,22 @@ const PORT = 4000;
 app.use(cors());
 app.use(bodyParser.json());
 
-// ✅ AIRTABLE CONFIG POUR LES CODES PROMO - CORRIGÉ
-const AIRTABLE_BASE_ID = "appLAFIAMjHg6ZEuQ"; // ✅ BASE ID CORRECT
-const AIRTABLE_TABLE_NAME = "tblZxqrnc80BmO6Dg"; // ✅ NOUVEAU ID DE TABLE CORRIGÉ
+// ✅ AIRTABLE CONFIG POUR LES CODES PROMO - BASE ANCIENNE (FONCTIONNELLE)
+const AIRTABLE_BASE_ID_PROMO = "appLAFIAMjHg6ZEuQ"; // ✅ BASE ANCIENNE POUR CODES PROMO
+const AIRTABLE_TABLE_NAME = "tblZxqrnc80BmO6Dg"; // ✅ TABLE CODES PROMO
 const AIRTABLE_API_KEY = "patzYVfCYwQWH3Mng.7ca9bb3a21a7976826e5a395e4ac4c01649307f3638b8f463e6d774a5de5f598"; // Votre jeton personnel
 
-// 🔍 ENDPOINT DE DEBUG : Lister les tables disponibles
+// ✅ BASE ID POUR LES WEBHOOKS - NOUVELLE BASE (FONCTIONNELLE)
+const AIRTABLE_BASE_ID_WEBHOOKS = "appJ34INj8TdrYu22"; // ✅ NOUVELLE BASE POUR WEBHOOKS
+
+// 🔍 ENDPOINT DE DEBUG : Lister les tables disponibles (CODES PROMO)
 app.get("/api/listTables", async (req, res) => {
   try {
-    console.log("🔍 Test de connexion à Airtable...");
-    console.log("📋 Base ID:", AIRTABLE_BASE_ID);
+    console.log("🔍 Test de connexion à Airtable (CODES PROMO)...");
+    console.log("📋 Base ID:", AIRTABLE_BASE_ID_PROMO);
     console.log("🔑 API Key (premiers caractères):", AIRTABLE_API_KEY.substring(0, 15) + "...");
     
-    const response = await fetch(`https://api.airtable.com/v0/meta/bases/${AIRTABLE_BASE_ID}/tables`, {
+    const response = await fetch(`https://api.airtable.com/v0/meta/bases/${AIRTABLE_BASE_ID_PROMO}/tables`, {
       headers: {
         "Authorization": `Bearer ${AIRTABLE_API_KEY}`,
         "Content-Type": "application/json"
@@ -57,7 +60,7 @@ app.get("/api/debugPromoTable", async (req, res) => {
   try {
     console.log("🔍 Debug de la table des codes promo...");
     
-    const airtableUrl = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_NAME}`;
+    const airtableUrl = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID_PROMO}/${AIRTABLE_TABLE_NAME}`;
     
     const response = await fetch(airtableUrl, {
       headers: {
@@ -83,13 +86,14 @@ app.get("/api/debugPromoTable", async (req, res) => {
   }
 });
 
-// 🔍 ENDPOINT : Vérifier un code promo
+// 🔍 ENDPOINT : Vérifier un code promo (BASE ANCIENNE)
 app.post("/api/verifyPromoCode", async (req, res) => {
   const { code } = req.body;
   
-  console.log("🚀 ENDPOINT APPELÉ !");
+  console.log("🚀 ENDPOINT CODES PROMO APPELÉ !");
   console.log("📨 Body reçu:", req.body);
   console.log("🔍 Tentative de vérification du code:", code);
+  console.log("🔍 Base utilisée pour codes promo:", AIRTABLE_BASE_ID_PROMO);
 
   if (!code || !code.trim()) {
     console.log("❌ Code promo vide ou manquant");
@@ -100,8 +104,8 @@ app.post("/api/verifyPromoCode", async (req, res) => {
   }
 
   try {
-    // 📡 Appel à l'API Airtable pour chercher le code
-    const airtableUrl = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_NAME}`;
+    // 📡 Appel à l'API Airtable pour chercher le code (BASE ANCIENNE)
+    const airtableUrl = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID_PROMO}/${AIRTABLE_TABLE_NAME}`;
     const searchCode = code.trim().toUpperCase();
     
     // ✅ TESTER DIFFÉRENTS NOMS DE CHAMPS POSSIBLES AVEC ENCODAGE CORRECT
@@ -203,14 +207,29 @@ app.post("/api/verifyPromoCode", async (req, res) => {
   }
 });
 
-// 🔁 Route 1 : Envoi partiel (formulaire final)
+// 🔁 Route 1 : Envoi formulaire vers la NOUVELLE BASE - ✅ WEBHOOKS INVERSÉS
 app.post("/api/sendToAirtable", async (req, res) => {
-  const payload = req.body;
+  const receivedData = req.body;
 
-  console.log("📨 Données reçues (final form) :", payload);
+  console.log("📨 Données reçues (formulaire demandes):", receivedData);
 
-  const webhookUrl =
-    "https://hooks.airtable.com/workflows/v1/genericWebhook/appZ5bv5TO84S1PtP/wflTHCMH9L6X2qYAV/wtrFSmrHH8ns2LxSw";
+  // 🔄 TRANSFORMATION DES NOMS DE CHAMPS POUR AIRTABLE
+  const payload = {
+    "Email": receivedData.email || "",
+    "Commentaire": receivedData.comment || "",
+    "Code postal": receivedData.postalCode || "",
+    "Profil du tuteur": Array.isArray(receivedData.tutorProfile) 
+      ? receivedData.tutorProfile.join(", ") 
+      : (receivedData.tutorProfile || "")
+  };
+
+  console.log("🔄 Données transformées pour Airtable:", payload);
+
+  // ✅ WEBHOOK INVERSÉ - NOUVELLE BASE appJ34INj8TdrYu22
+  const webhookUrl = "https://hooks.airtable.com/workflows/v1/genericWebhook/appJ34INj8TdrYu22/wfl3VVnEmHoBLHT0M/wtrFesxsBUA2Yeew8";
+
+  console.log("🚀 Envoi vers le webhook (demandes - INVERSÉ):", webhookUrl);
+  console.log("🚀 Base de destination webhooks:", AIRTABLE_BASE_ID_WEBHOOKS);
 
   try {
     const response = await fetch(webhookUrl, {
@@ -225,33 +244,96 @@ app.post("/api/sendToAirtable", async (req, res) => {
     try {
       result = await response.json();
     } catch (jsonErr) {
-      console.warn("⚠️ Airtable (final form) n'a pas renvoyé de JSON.");
+      console.warn("⚠️ Pas de JSON en retour");
       result = { success: true };
     }
 
     if (!response.ok) {
-      throw new Error(result?.error || "Erreur HTTP Airtable (final form)");
+      throw new Error(result?.error || "Erreur HTTP Airtable");
     }
 
-    console.log("✅ Réponse Airtable (final form) :", result);
+    console.log("✅ SUCCESS - Formulaire envoyé vers", AIRTABLE_BASE_ID_WEBHOOKS);
+    console.log("✅ Réponse:", result);
+    
     res.status(200).json({
-      message: "Formulaire final envoyé avec succès",
+      message: "✅ Formulaire envoyé vers la NOUVELLE BASE",
+      baseDestination: AIRTABLE_BASE_ID_WEBHOOKS,
+      webhook: "wfl3VVnEmHoBLHT0M",
+      originalData: receivedData,
+      transformedData: payload,
       airtableResponse: result,
     });
   } catch (err) {
-    console.error("❌ Erreur (final form) :", err);
-    res.status(500).json({ error: "Échec d'envoi vers le webhook final form" });
+    console.error("❌ Erreur formulaire:", err);
+    res.status(500).json({ error: "Échec d'envoi formulaire" });
   }
 });
 
-// 🔁 Route 2 : Envoi complet du dossier
+// 🔁 Route 2 : Envoi dossier complet vers la NOUVELLE BASE - ✅ WEBHOOKS INVERSÉS
 app.post("/api/sendFullDataToAirtable", async (req, res) => {
-  const payload = req.body;
+  const receivedData = req.body;
 
-  console.log("📨 Données reçues (dossier complet) :", payload);
+  console.log("📨 Données reçues (dossier complet):", receivedData);
 
-  const fullWebhookUrl =
-    "https://hooks.airtable.com/workflows/v1/genericWebhook/appZ5bv5TO84S1PtP/wflHx1Pcgbb3NbCgo/wtrtILucOysyNwbyZ";
+  // 🔄 TRANSFORMATION AUTOMATIQUE DES NOMS DE CHAMPS POUR AIRTABLE
+  // Mapping complet JavaScript → Français Airtable
+  const fieldMapping = {
+    // Champs principaux
+    "service": "Service",
+    "prenom": "Prénom de l'élève", 
+    "classe": "Classe",
+    "besoins": "Besoins",
+    "particularites": "Particularités",
+    "objectifs": "Objectifs",
+    "matieres": "Matières",
+    "nombreDeCours": "Nombre de cours / semaine",
+    "dureeSeances": "Durée des séances", 
+    "disponibilites": "Disponibilités",
+    "civilite": "Civilité",
+    "nomParent": "Nom du parent",
+    "telephoneParent": "Téléphone du parent",
+    "email": "Email",
+    
+    // Alternatives possibles
+    "prenomEleve": "Prénom de l'élève",
+    "prenomDeLeleve": "Prénom de l'élève",
+    "nomDuParent": "Nom du parent",
+    "telephoneDuParent": "Téléphone du parent",
+    "emailParent": "Email",
+    "nombreDeCoursParSemaine": "Nombre de cours / semaine",
+    "durееDesSeances": "Durée des séances"
+  };
+
+  // Transformation systématique
+  const payload = {};
+  
+  // D'abord, copier les champs qui sont déjà au bon format (français)
+  Object.keys(receivedData).forEach(key => {
+    if (key.includes('é') || key.includes('è') || key.includes('à') || key.includes(' ')) {
+      // C'est probablement déjà un nom français
+      payload[key] = receivedData[key];
+    }
+  });
+  
+  // Ensuite, transformer les champs JavaScript
+  Object.keys(receivedData).forEach(key => {
+    if (fieldMapping[key]) {
+      payload[fieldMapping[key]] = receivedData[key];
+      console.log(`🔄 Transformé: ${key} → ${fieldMapping[key]} = "${receivedData[key]}"`);
+    } else if (!payload[key]) {
+      // Si pas de mapping et pas déjà ajouté, garder tel quel
+      payload[key] = receivedData[key];
+    }
+  });
+
+  console.log("🔄 Données transformées pour Airtable:", payload);
+  console.log("📤 Payload final envoyé:", payload);
+
+  // ✅ WEBHOOK INVERSÉ - NOUVELLE BASE appJ34INj8TdrYu22
+  const fullWebhookUrl = "https://hooks.airtable.com/workflows/v1/genericWebhook/appJ34INj8TdrYu22/wflMhRDjXdZdcMx3B/wtroAoN7cqbEpjSzX";
+
+  console.log("🚀 Envoi vers le webhook (dossier complet - INVERSÉ):", fullWebhookUrl);
+  console.log("🚀 Base de destination webhooks:", AIRTABLE_BASE_ID_WEBHOOKS);
 
   try {
     const response = await fetch(fullWebhookUrl, {
@@ -266,35 +348,56 @@ app.post("/api/sendFullDataToAirtable", async (req, res) => {
     try {
       result = await response.json();
     } catch (jsonErr) {
-      console.warn("⚠️ Airtable (dossier complet) n'a pas renvoyé de JSON.");
+      console.warn("⚠️ Pas de JSON en retour");
       result = { success: true };
     }
 
     if (!response.ok) {
-      throw new Error(result?.error || "Erreur HTTP Airtable (dossier complet)");
+      throw new Error(result?.error || "Erreur HTTP Airtable");
     }
 
-    console.log("✅ Réponse Airtable (dossier complet) :", result);
+    console.log("✅ SUCCESS - Dossier complet envoyé vers", AIRTABLE_BASE_ID_WEBHOOKS);
+    console.log("✅ Réponse:", result);
+    
     res.status(200).json({
-      message: "Dossier complet envoyé avec succès",
+      message: "✅ Dossier complet envoyé vers la NOUVELLE BASE",
+      baseDestination: AIRTABLE_BASE_ID_WEBHOOKS,
+      webhook: "wflMhRDjXdZdcMx3B",
+      originalData: receivedData,
+      transformedData: payload,
       airtableResponse: result,
     });
   } catch (err) {
-    console.error("❌ Erreur (dossier complet) :", err);
-    res
-      .status(500)
-      .json({ error: "Échec d'envoi vers le webhook dossier complet" });
+    console.error("❌ Erreur dossier complet:", err);
+    res.status(500).json({ error: "Échec d'envoi dossier complet" });
   }
 });
 
 // 🚀 Lancement du serveur
 app.listen(PORT, () => {
-  console.log(`✅ Backend running on http://localhost:${PORT}`);
-  console.log(`🔍 Endpoint code promo: http://localhost:${PORT}/api/verifyPromoCode`);
-  console.log(`🔍 Endpoint debug tables: http://localhost:${PORT}/api/listTables`);
-  console.log(`🔍 Endpoint debug table promo: http://localhost:${PORT}/api/debugPromoTable`);
-  console.log(`📋 Configuration Airtable:`);
-  console.log(`   - Base ID: ${AIRTABLE_BASE_ID}`);
-  console.log(`   - Table: "${AIRTABLE_TABLE_NAME}"`);
-  console.log(`   - API Key: ${AIRTABLE_API_KEY.substring(0, 15)}...`);
+  console.log(`✅ Serveur démarré sur http://localhost:${PORT}`);
+  console.log("");
+  console.log("📋 CONFIGURATION MULTI-BASES:");
+  console.log(`   🔍 Codes promo: ${AIRTABLE_BASE_ID_PROMO} (base ancienne)`);
+  console.log(`   📤 Webhooks: ${AIRTABLE_BASE_ID_WEBHOOKS} (base nouvelle)`);
+  console.log("");
+  console.log("🎯 ENDPOINTS DISPONIBLES:");
+  console.log("   📋 CODES PROMO:");
+  console.log(`     - POST /api/verifyPromoCode → Vérifier code promo`);
+  console.log(`     - GET  /api/listTables → Debug tables`);
+  console.log(`     - GET  /api/debugPromoTable → Debug codes promo`);
+  console.log("   📤 WEBHOOKS (avec transformation des champs):");
+  console.log(`     - POST /api/sendToAirtable → Formulaire demandes`);
+  console.log(`     - POST /api/sendFullDataToAirtable → Dossier complet`);
+  console.log("");
+  console.log("🔄 TRANSFORMATION DES CHAMPS ACTIVÉE:");
+  console.log("   - email → Email");
+  console.log("   - comment → Commentaire");
+  console.log("   - postalCode → Code postal");
+  console.log("   - tutorProfile → Profil du tuteur");
+  console.log("   - prenom → Prénom de l'élève (etc.)");
+  console.log("");
+  console.log("🚨 SERVEUR COMPLET ET FONCTIONNEL !");
+  console.log("✅ Codes promo: BASE ANCIENNE (appLAFIAMjHg6ZEuQ)");
+  console.log("✅ Webhooks: BASE NOUVELLE (appJ34INj8TdrYu22)");
 });

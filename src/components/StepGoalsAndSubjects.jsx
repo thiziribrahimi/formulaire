@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./StepGoalsSubjects.css";
 
+const PUBLIC_URL = process.env.PUBLIC_URL;
+
 const goalsWithIcons = [
   { id: "Remise à niveau", icon: "Remise-icon.svg" },
   { id: "SOS - échec scolaire", icon: "sos_og.svg" },
@@ -58,7 +60,7 @@ const StepGoalsSubjects = ({ goalsSubjects, setGoalsSubjects, onNext, onBack }) 
     <>
       {/* 🔙 Bouton retour externe */}
       <button className="btn-icon-outside" onClick={onBack}>
-        <img src="/left-return-arrow.svg" alt="Retour" className="icon-left" />
+        <img src={`${PUBLIC_URL}/left-return-arrow.svg`} alt="Retour" className="icon-left" />
       </button>
 
       <div className="step-goals-subjects container py-5">
@@ -74,7 +76,7 @@ const StepGoalsSubjects = ({ goalsSubjects, setGoalsSubjects, onNext, onBack }) 
               className={`goal-button ${selectedGoal === g.id ? "active" : ""}`}
               onClick={() => selectGoal(g.id)}
             >
-              <img src={`/${g.icon}`} alt={g.id} className="goal-icon" />
+              <img src={`${PUBLIC_URL}/${g.icon}`} alt={g.id} className="goal-icon" />
               {g.id}
             </button>
           ))}

@@ -1,6 +1,8 @@
 import React from "react";
 import "./ServiceChoiceCard.css";
 
+const PUBLIC_URL = process.env.PUBLIC_URL;
+
 function ServiceChoiceCard({ icon, title, price, priceNote, description, highlight, onClick }) {
   return (
     <div

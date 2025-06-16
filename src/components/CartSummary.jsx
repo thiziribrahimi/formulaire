@@ -1,6 +1,30 @@
 import React, { useState, useEffect } from "react";
 import "./CartSummary.css";
 
+const PUBLIC_URL = process.env.PUBLIC_URL;
+const cards = [
+  {
+    title: "Babysitting",
+    src: `${PUBLIC_URL}/babysitting-illustration.svg`,
+  },
+  {
+    title: "Tutoring",
+    src: `${PUBLIC_URL}/tutoring-illustration.svg`,
+  },
+  {
+    title: "Music",
+    src: `${PUBLIC_URL}/music-illustration.svg`,
+  },
+  {
+    title: "Magic",
+    src: `${PUBLIC_URL}/magic-hand.svg`,
+  },
+  {
+    title: "Up",
+    src: `${PUBLIC_URL}/up-direction-img.svg`,
+  },
+];
+
 const CartSummary = ({
   selectedService,
   studentInfo,
@@ -114,7 +138,7 @@ const CartSummary = ({
     // Logique améliorée selon les étapes et services
     if (currentStep >= 1 && currentStep < 4) {
       return {
-        src: "/up-direction-img.svg",
+        src: `${PUBLIC_URL}/up-direction-img.svg`,
         alt: "Flèche directionnelle",
         className: "service-image direction-arrow floating"
       };
@@ -123,7 +147,7 @@ const CartSummary = ({
     if (currentStep === 4) {
       // Étape intermédiaire - image de transition
       return {
-        src: "/up-direction-img.svg",
+        src: `${PUBLIC_URL}/up-direction-img.svg`,
         alt: "Transition",
         className: "service-image direction-arrow"
       };
@@ -131,7 +155,7 @@ const CartSummary = ({
 
     if (currentStep === 5) {
       return {
-        src: "/magic-hand.svg",
+        src: `${PUBLIC_URL}/magic-hand.svg`,
         alt: "Main magique - Finalisation",
         className: "service-image magic-hand"
       };
@@ -141,25 +165,25 @@ const CartSummary = ({
     switch (selectedService) {
       case "babysitting":
         return {
-          src: "/babysitting-illustration.svg",
+          src: `${PUBLIC_URL}/babysitting-illustration.svg`,
           alt: "Babysitting éducatif",
           className: "service-image babysitting floating"
         };
       case "tutoring":
         return {
-          src: "/tutoring-illustration.svg",
+          src: `${PUBLIC_URL}/tutoring-illustration.svg`,
           alt: "Cours de soutien",
           className: "service-image tutoring floating"
         };
       case "music":
         return {
-          src: "/music-illustration.svg",
+          src: `${PUBLIC_URL}/music-illustration.svg`,
           alt: "Cours de musique",
           className: "service-image music floating"
         };
       default:
         return {
-          src: "/up-direction-img.svg",
+          src: `${PUBLIC_URL}/up-direction-img.svg`,
           alt: "Service éducatif",
           className: "service-image direction-arrow floating"
         };
@@ -215,7 +239,7 @@ const CartSummary = ({
 
         {isEmpty ? (
           <>
-            <img src="/emptey-mon-panier.svg" alt="Panier vide" className="cart-summary-img" />
+            <img src={`${PUBLIC_URL}/emptey-mon-panier.svg`} alt="Panier vide" className="cart-summary-img" />
             <p className="cart-summary-placeholder">
               Sélectionnez un service pour découvrir nos intervenants qualifiés et leurs tarifs.
             </p>
@@ -226,7 +250,7 @@ const CartSummary = ({
               <>
                 <div className="cart-summary-section">
                   <p className="cart-summary-label">
-                    <img src="/location.svg" alt="Adresse" className="icon-img" />
+                    <img src={`${PUBLIC_URL}/location.svg`} alt="Adresse" className="icon-img" />
                     <strong>{address}</strong>
                   </p>
                 </div>
@@ -238,7 +262,7 @@ const CartSummary = ({
               <>
                 <div className="cart-summary-section">
                   <div className="cart-summary-label badge-inline">
-                    <img src="/child-icon.svg" alt="Élève" className="icon-img" />
+                    <img src={`${PUBLIC_URL}/child-icon.svg`} alt="Élève" className="icon-img" />
                     <strong>
                       {studentInfo.firstName?.toUpperCase()}
                       {studentInfo.lastName ? ` ${studentInfo.lastName.toUpperCase()}` : ""}
@@ -260,7 +284,7 @@ const CartSummary = ({
               <>
                 <div className="cart-summary-section">
                   <div className="cart-summary-label badge-inline">
-                    <img src="/cart-icon.svg" alt="Service" className="icon-img" />
+                    <img src={`${PUBLIC_URL}/cart-icon.svg`} alt="Service" className="icon-img" />
                     <strong>{service.label}</strong>
                     {basePrice && (
                       <div className="badge-container-inline">

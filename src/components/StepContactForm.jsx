@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import "./StepContactForm.css";
 
+const PUBLIC_URL = process.env.PUBLIC_URL;
+
 function StepContactForm({ onBack, onSubmit, setContactInfo }) {
   const [formData, setFormData] = useState({
     civility: "",
@@ -74,7 +76,7 @@ function StepContactForm({ onBack, onSubmit, setContactInfo }) {
   return (
     <>
       <button className="btn-icon-outside" onClick={onBack}>
-        <img src="/left-return-arrow.svg" alt="Retour" className="icon-left" />
+        <img src={`${PUBLIC_URL}/left-return-arrow.svg`} alt="Retour" className="icon-left" />
       </button>
 
       <div className="contact-form-wrapper">
